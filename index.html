@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luck-in Cafe | Arunachala College Pre-Order & Token System</title>
+  <link rel="icon" type="image/jpg" href="mascot.jpg" />
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #FF6B35;
+      --primary-dark: #D62828;
+      --gold: #FFB800;
+      --bg-dark: #090D16;
+      --card-bg: #111827;
+      --card-border: #1F2937;
+      --text-light: #F9FAFB;
+      --text-muted: #9CA3AF;
+      --emerald: #10B981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Announcement Bar */
+    .top-banner {
+      background: linear-gradient(90deg, #D97706, #EA580C, #DC2626);
+      color: #FFF;
+      text-align: center;
+      padding: 6px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* Header Navigation */
+    header {
+      background: rgba(17, 24, 39, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px border rgba(249, 115, 22, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .logo-img {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      object-fit: cover;
+      border: 2px solid var(--gold);
+      box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-title span {
+      color: var(--primary);
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .badge-college {
+      background: rgba(249, 115, 22, 0.15);
+      color: #FB923C;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 99px;
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      text-transform: uppercase;
+      margin-left: 6px;
+    }
+
+    /* View Switcher */
+    .view-switcher {
+      display: flex;
+      background: rgba(31, 41, 55, 0.8);
+      padding: 4px;
+      border-radius: 14px;
+      border: 1px solid #374151;
+      gap: 4px;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: #D1D5DB;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(135deg, var(--primary), var(--gold));
+      color: #090D16;
+      box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25);
+    }
+
+    .cart-btn {
+      background: linear-gradient(135deg, var(--primary), var(--gold));
+      border: none;
+      color: #090D16;
+      padding: 10px 18px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(255, 107, 53, 0.3);
+      transition: transform 0.15s ease;
+    }
+
+    .cart-btn:active {
+      transform: scale(0.95);
+    }
+
+    .cart-count {
+      background: #090D16;
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 900;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Simulator Bar */
+    .sim-bar {
+      background: #0F172A;
+      border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 10px 16px;
+    }
+
+    .sim-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 12px;
+    }
+
+    .sim-title {
+      color: var(--gold);
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .time-badge {
+      background: rgba(245, 158, 11, 0.15);
+      color: #FCD34D;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-weight: 700;
+    }
+
+    .preset-btns {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .preset-btn {
+      background: #1E293B;
+      border: 1px solid #334155;
+      color: #94A3B8;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .preset-btn.active {
+      background: #EA580C;
+      color: #FFF;
+      border-color: #F97316;
+    }
+
+    .preset-btn.locked {
+      border-color: #991B1B;
+      color: #FCA5A5;
+    }
+
+    .preset-btn.locked.active {
+      background: #DC2626;
+      color: #FFF;
+    }
+
+    /* Container Main */
+    main {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 16px;
+      flex: 1;
+    }
+
+    /* Hero Banner Card */
+    .hero-card {
+      background: linear-gradient(135deg, #D97706, #EA580C, #B91C1C);
+      border-radius: 28px;
+      padding: 32px;
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      box-shadow: 0 20px 40px rgba(234, 88, 12, 0.25);
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content h2 {
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .hero-content p {
+      font-size: 14px;
+      color: #FEF3C7;
+      max-width: 540px;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .hero-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .hero-chip {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .hero-mascot-box {
+      width: 160px;
+      height: 160px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.25);
+      padding: 8px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+      flex-shrink: 0;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .hero-mascot-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 18px;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Filters Bar */
+    .filter-bar {
+      background: #111827;
+      border: 1px solid #1F2937;
+      padding: 12px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      background: #1F2937;
+      border: 1px solid #374151;
+      color: #FFF;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      outline: none;
+      width: 280px;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+    }
+
+    .veg-toggles {
+      display: flex;
+      gap: 6px;
+    }
+
+    .toggle-btn {
+      background: #1F2937;
+      border: 1px solid #374151;
+      color: #9CA3AF;
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .toggle-btn.active {
+      background: #374151;
+      color: #FFF;
+      border-color: #4B5563;
+    }
+
+    /* Category Scroll */
+    .category-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+    }
+
+    .cat-pill {
+      background: #111827;
+      border: 1px solid #1F2937;
+      color: #D1D5DB;
+      padding: 10px 18px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .cat-pill.active {
+      background: linear-gradient(135deg, var(--primary), var(--gold));
+      color: #090D16;
+      border-color: var(--gold);
+      box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25);
+    }
+
+    /* Menu Cards Grid */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .food-card {
+      background: #111827;
+      border: 1px solid #1F2937;
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .food-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 107, 53, 0.5);
+    }
+
+    .card-img-box {
+      height: 170px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .badge-veg {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(9, 13, 22, 0.85);
+      backdrop-filter: blur(6px);
+      padding: 4px 8px;
+      border-radius: 99px;
+      font-size: 10px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid #374151;
+    }
+
+    .dot-veg {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--emerald);
+    }
+
+    .dot-nonveg {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #EF4444;
+    }
+
+    .badge-hot {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: linear-gradient(135deg, var(--gold), var(--primary));
+      color: #090D16;
+      font-size: 10px;
+      font-weight: 900;
+      padding: 3px 8px;
+      border-radius: 99px;
+      text-transform: uppercase;
+    }
+
+    .card-body {
+      padding: 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .item-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #FFF;
+      margin-bottom: 4px;
+    }
+
+    .item-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid #1F2937;
+    }
+
+    .price-tag {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--gold);
+    }
+
+    .add-btn {
+      background: linear-gradient(135deg, var(--primary), var(--gold));
+      border: none;
+      color: #090D16;
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .add-btn:active {
+      transform: scale(0.92);
+    }
+
+    /* Modal Cart Drawer */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      z-index: 50;
+      display: flex;
+      justify-content: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer-content {
+      width: 100%;
+      max-width: 440px;
+      background: #111827;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-left: 1px solid #1F2937;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-overlay.open .drawer-content {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      padding: 16px;
+      background: #090D16;
+      border-bottom: 1px solid #1F2937;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .drawer-body {
+      padding: 16px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .cart-item-row {
+      background: #1F2937;
+      padding: 12px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #111827;
+      padding: 4px 8px;
+      border-radius: 8px;
+    }
+
+    .qty-btn {
+      background: #374151;
+      color: #FFF;
+      border: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* Slot Picker Box */
+    .slot-picker-box {
+      background: #090D16;
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      padding: 16px;
+      border-radius: 18px;
+      margin: 16px 0;
+    }
+
+    .slot-card {
+      background: #111827;
+      border: 1px solid #1F2937;
+      padding: 12px;
+      border-radius: 12px;
+      margin-top: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slot-card.selected {
+      border-color: var(--gold);
+      background: rgba(245, 158, 11, 0.1);
+    }
+
+    .slot-card.locked {
+      border-color: #7F1D1D;
+      background: rgba(127, 29, 29, 0.2);
+    }
+
+    .alert-lock-box {
+      background: #450A0A;
+      border: 1px solid #991B1B;
+      color: #FCA5A5;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 11px;
+      margin-top: 10px;
+      line-height: 1.4;
+    }
+
+    .drawer-footer {
+      padding: 16px;
+      background: #090D16;
+      border-top: 1px solid #1F2937;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--gold));
+      color: #090D16;
+      padding: 14px;
+      border-radius: 14px;
+      border: none;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .checkout-btn:disabled {
+      background: #374151;
+      color: #6B7280;
+      cursor: not-allowed;
+    }
+
+    /* Token Receipt Ticket Modal */
+    .ticket-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .ticket-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .ticket-card {
+      background: #111827;
+      border: 2px solid var(--gold);
+      width: 100%;
+      max-width: 400px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    }
+
+    .ticket-top {
+      background: linear-gradient(135deg, #D97706, #EA580C);
+      padding: 20px;
+      text-align: center;
+      color: #FFF;
+    }
+
+    .token-badge-big {
+      background: #090D16;
+      color: var(--gold);
+      border: 2px solid var(--gold);
+      padding: 12px 24px;
+      border-radius: 16px;
+      font-size: 36px;
+      font-weight: 900;
+      display: inline-block;
+      margin: 10px 0;
+    }
+
+    .stepper {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px;
+      background: #090D16;
+      border-bottom: 1px solid #1F2937;
+    }
+
+    .step-item {
+      text-align: center;
+      font-size: 10px;
+      color: #6B7280;
+      font-weight: 700;
+    }
+
+    .step-item.active {
+      color: var(--gold);
+    }
+
+    .step-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #1F2937;
+      margin: 0 auto 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+
+    .step-item.active .step-circle {
+      background: var(--gold);
+      color: #090D16;
+    }
+
+    /* Live Queue TV Board */
+    .now-serving-box {
+      background: #111827;
+      border: 2px solid var(--emerald);
+      border-radius: 28px;
+      padding: 32px;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+    }
+
+    .now-serving-token {
+      font-size: 64px;
+      font-weight: 900;
+      color: var(--emerald);
+      background: #090D16;
+      border: 4px solid var(--emerald);
+      padding: 16px 32px;
+      border-radius: 24px;
+      display: inline-block;
+      margin: 16px 0;
+    }
+
+    /* Admin Table Card */
+    .admin-order-card {
+      background: #111827;
+      border: 1px solid #1F2937;
+      padding: 16px;
+      border-radius: 18px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .admin-btn {
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-prep { background: var(--gold); color: #090D16; }
+    .btn-ready { background: var(--emerald); color: #090D16; }
+    .btn-done { background: #374151; color: #9CA3AF; }
+
+    /* Hidden Utility */
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-banner">
+    ✨ ARUNACHALA COLLEGE LUCK-IN CAFE — PRE-ORDER BREAK SLOTS & SKIP THE QUEUE LINE!
+  </div>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="header-container">
+      <div class="logo-group" onclick="switchView('menu')">
+        <img src="mascot.jpg" alt="Mascot Chippy" class="logo-img" />
+        <div>
+          <div style="display: flex; align-items: center;">
+            <div class="brand-title">Luck-in <span>Cafe</span></div>
+            <span class="badge-college">Arunachala</span>
+          </div>
+          <div class="brand-sub">🐥 Pre-Order & Slot Token System</div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="view-switcher">
+        <button class="nav-btn active" id="tab-menu" onclick="switchView('menu')">
+          🛍️ Student Menu
+        </button>
+        <button class="nav-btn" id="tab-board" onclick="switchView('board')">
+          📺 Live Queue Board
+        </button>
+        <button class="nav-btn" id="tab-admin" onclick="switchView('admin')">
+          🛡️ Staff Dashboard
+        </button>
+      </div>
+
+      <!-- Cart Button -->
+      <button class="cart-btn" onclick="openCart()">
+        🛒 Cart
+        <div class="cart-count" id="header-cart-count">0</div>
+      </button>
+    </div>
+  </header>
+
+  <!-- Slot Lock Time Simulator Bar -->
+  <div class="sim-bar">
+    <div class="sim-container">
+      <div class="sim-title">
+        ⚙️ Slot Lock Demo Simulator:
+        <span class="time-badge" id="sim-time-display">10:20 AM</span>
+      </div>
+
+      <div class="preset-btns">
+        <button class="preset-btn active" onclick="setSimTime('live', 0)">Live System Time</button>
+        <button class="preset-btn" onclick="setSimTime('sim', 620)">10:20 AM (Morning Open)</button>
+        <button class="preset-btn locked" onclick="setSimTime('sim', 632)">10:32 AM (Morning Locked 🔒)</button>
+        <button class="preset-btn" onclick="setSimTime('sim', 735)">12:15 PM (Lunch Open)</button>
+        <button class="preset-btn locked" onclick="setSimTime('sim', 745)">12:25 PM (Lunch Locked 🔒)</button>
+        <button class="preset-btn" onclick="setSimTime('sim', 930)">3:30 PM (Evening Open)</button>
+        <button class="preset-btn locked" onclick="setSimTime('sim', 940)">3:40 PM (Evening Locked 🔒)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <main>
+    <!-- VIEW 1: STUDENT MENU -->
+    <div id="view-menu">
+      <!-- Hero Banner -->
+      <div class="hero-card">
+        <div class="hero-content">
+          <h2>Order Ahead,<br/><span style="color: var(--gold);">Skip the Crowd!</span></h2>
+          <p>Don't spend short 10-minute break times standing in long lines. Pre-order your hot meals, juices & shakes for fixed break slots!</p>
+          <div class="hero-chips">
+            <span class="hero-chip">⚡ 2-Tap Quick Token</span>
+            <span class="hero-chip">🔒 10-Min Prep Cutoff</span>
+            <span class="hero-chip">💳 Cash / UPI on Pickup</span>
+          </div>
+        </div>
+
+        <div class="hero-mascot-box">
+          <img src="mascot.jpg" alt="Luck-in Mascot" />
+        </div>
+      </div>
+
+      <!-- Filters & Search -->
+      <div class="filter-bar">
+        <input type="text" id="search-input" class="search-input" placeholder="Search biriyani, juice, burgers..." oninput="renderMenu()" />
+        <div class="veg-toggles">
+          <button class="toggle-btn active" id="veg-all" onclick="setVegFilter('all')">All Items</button>
+          <button class="toggle-btn" id="veg-veg" onclick="setVegFilter('veg')">🟢 Pure Veg</button>
+          <button class="toggle-btn" id="veg-nonveg" onclick="setVegFilter('nonveg')">🔴 Non-Veg</button>
+        </div>
+      </div>
+
+      <!-- Category Pills -->
+      <div class="category-scroll">
+        <button class="cat-pill active" onclick="setCategory('all', this)">✨ All Categories</button>
+        <button class="cat-pill" onclick="setCategory('meals', this)">🍱 Meals & Snacks</button>
+        <button class="cat-pill" onclick="setCategory('juice', this)">🍋 Fresh Juices</button>
+        <button class="cat-pill" onclick="setCategory('milkshakes', this)">🥤 Milkshakes</button>
+        <button class="cat-pill" onclick="setCategory('icecream', this)">🍨 Ice Cream Scoops</button>
+        <button class="cat-pill" onclick="setCategory('mojitos', this)">🍸 Mojitos & Fizz</button>
+      </div>
+
+      <!-- Food Items Grid -->
+      <div class="menu-grid" id="menu-grid">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- VIEW 2: LIVE QUEUE BOARD -->
+    <div id="view-board" class="hidden">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <h2 style="font-size: 28px; font-weight: 900;">Live Pickup Counter Queue</h2>
+        <p style="color: var(--text-muted); font-size: 13px;">Check token status on screen. Pick up food when token turns GREEN!</p>
+      </div>
+
+      <div class="now-serving-box">
+        <div style="font-size: 12px; font-weight: 900; color: var(--emerald); letter-spacing: 2px;">
+          NOW SERVING AT COUNTER
+        </div>
+
+        <div class="now-serving-token" id="board-now-serving-token">
+          MB-008
+        </div>
+
+        <div style="font-size: 18px; font-weight: 800;" id="board-now-serving-name">Ananya S. (21CS042)</div>
+
+        <div style="margin-top: 16px;">
+          <button class="add-btn" style="padding: 10px 20px; font-size: 13px;" onclick="speakToken()">
+            🔊 Announce Token Audio
+          </button>
+        </div>
+      </div>
+
+      <div style="margin-top: 32px;">
+        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 12px;">🔥 In Kitchen Preparation Queue</h3>
+        <div id="board-prep-list" style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 3: KITCHEN ADMIN DASHBOARD -->
+    <div id="view-admin" class="hidden">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <div>
+          <h2 style="font-size: 24px; font-weight: 900;">Kitchen Staff Portal</h2>
+          <p style="color: var(--text-muted); font-size: 13px;">Advance token status & manage kitchen prep locks.</p>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <button class="nav-btn active" onclick="setAdminSlot('morning', this)">Morning (MB)</button>
+          <button class="nav-btn" onclick="setAdminSlot('lunch', this)">Lunch (LB)</button>
+          <button class="nav-btn" onclick="setAdminSlot('evening', this)">Evening (EB)</button>
+        </div>
+      </div>
+
+      <div id="admin-orders-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </main>
+
+  <!-- CART MODAL DRAWER -->
+  <div class="modal-overlay" id="cart-modal">
+    <div class="drawer-content">
+      <div class="drawer-header">
+        <h3 style="font-weight: 800;">Your Order Cart 🛒</h3>
+        <button onclick="closeCart()" style="background:none; border:none; color:FFF; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+
+      <div class="drawer-body">
+        <div id="cart-items-container">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Slot Picker Box -->
+        <div class="slot-picker-box">
+          <div style="font-size: 12px; font-weight: 800; color: var(--gold); margin-bottom: 8px;">
+            ⏰ SELECT COLLEGE BREAK SLOT:
+          </div>
+
+          <div id="slot-options-container">
+            <!-- Slot options -->
+          </div>
+
+          <div id="slot-lock-alert" class="alert-lock-box hidden">
+            🔒 <strong>Orders Locked for Prep!</strong> Cutoff time reached (10 mins before slot). Please select another break slot.
+          </div>
+        </div>
+
+        <!-- Student Form Inputs -->
+        <div style="background: #090D16; padding: 14px; border-radius: 16px; margin-top: 12px;">
+          <div style="font-size: 12px; font-weight: 800; color: #FFF; margin-bottom: 10px;">STUDENT DETAILS</div>
+          <input type="text" id="input-name" class="search-input" style="width:100%; margin-bottom: 8px;" value="Jothisha S." placeholder="Student Name *" />
+          <input type="text" id="input-roll" class="search-input" style="width:100%; margin-bottom: 8px;" value="21CS055" placeholder="Roll Number *" />
+          
+          <select id="input-payment" class="search-input" style="width:100%;">
+            <option value="UPI on Pickup">UPI QR on Pickup</option>
+            <option value="Cash on Pickup">Cash at Counter</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <div style="display:flex; justify-content:space-between; margin-bottom: 12px; font-weight: 900;">
+          <span>Total Bill:</span>
+          <span style="color: var(--gold); font-size: 18px;" id="cart-total-price">₹0</span>
+        </div>
+        <button class="checkout-btn" id="btn-checkout" onclick="confirmOrder()">Confirm Order & Get Token</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKEN RECEIPT TICKET MODAL -->
+  <div class="ticket-modal" id="ticket-modal">
+    <div class="ticket-card">
+      <div class="ticket-top">
+        <div style="font-size: 12px; font-weight: 800;">LUCK-IN CAFE TOKEN PASS</div>
+        <div class="token-badge-big" id="ticket-token-id">MB-014</div>
+        <div style="font-size: 12px; font-weight: 700;" id="ticket-pickup-time">Pickup: 10:40 AM – 10:55 AM</div>
+      </div>
+
+      <div class="stepper">
+        <div class="step-item active" id="step-placed"><div class="step-circle">1</div>Placed</div>
+        <div class="step-item" id="step-preparing"><div class="step-circle">2</div>Preparing</div>
+        <div class="step-item" id="step-ready"><div class="step-circle">3</div>Ready</div>
+        <div class="step-item" id="step-done"><div class="step-circle">4</div>Completed</div>
+      </div>
+
+      <div style="padding: 20px; font-size: 12px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom: 8px;">
+          <span style="color:var(--text-muted);">Student:</span>
+          <strong id="ticket-student-name">Jothisha S. (21CS055)</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom: 16px;">
+          <span style="color:var(--text-muted);">Payment:</span>
+          <strong style="color:var(--gold);" id="ticket-payment-method">UPI on Pickup</strong>
+        </div>
+
+        <button class="checkout-btn" onclick="closeTicket()">Close Receipt</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <script>
+    // Data Definitions
+    const BREAK_SLOTS = [
+      { id: 'morning', name: 'Morning Break', code: 'MB', pickup: '10:40 AM – 10:55 AM', lockMins: 630, endMins: 655 },
+      { id: 'lunch', name: 'Lunch Break', code: 'LB', pickup: '12:30 PM – 1:10 PM', lockMins: 740, endMins: 790 },
+      { id: 'evening', name: 'Evening Break', code: 'EB', pickup: '3:45 PM – 3:55 PM', lockMins: 935, endMins: 955 }
+    ];
+
+    const MENU_ITEMS = [
+      { id: 'm1', name: 'Chicken Biriyani Special', category: 'meals', price: 110, isVeg: false, prep: '8 mins', image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop&q=80', desc: 'Aromatic Seeraga Samba rice with tender chicken & egg.' },
+      { id: 'm2', name: 'Veg Dum Biriyani', category: 'meals', price: 80, isVeg: true, prep: '6 mins', image: 'https://images.unsplash.com/photo-1642821373181-696a54913e93?w=500&auto=format&fit=crop&q=80', desc: 'Basmati rice cooked with paneer & garden veggies.' },
+      { id: 'm3', name: 'Crispy Zesty Chicken Burger', category: 'meals', price: 85, isVeg: false, prep: '5 mins', image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&auto=format&fit=crop&q=80', desc: 'Crispy chicken patty, lettuce & signature mayo.' },
+      { id: 'm4', name: 'Classic Double Egg Bread Omelette', category: 'meals', price: 40, isVeg: false, prep: '3 mins', image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=500&auto=format&fit=crop&q=80', desc: 'Butter toasted white bread with double egg omelette.' },
+      { id: 'm5', name: 'Cheesy Loaded Peri Peri Fries', category: 'meals', price: 70, isVeg: true, prep: '4 mins', image: 'https://images.unsplash.com/photo-1576107232684-1279f3908594?w=500&auto=format&fit=crop&q=80', desc: 'Crispy golden fries with spicy peri-peri & warm cheese.' },
+      { id: 'm6', name: 'Lays Crusted Chicken Pops', category: 'meals', price: 90, isVeg: false, prep: '5 mins', image: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=500&auto=format&fit=crop&q=80', desc: 'Chicken nuggets crusted with magic masala Lays.' },
+      { id: 'j1', name: 'Fresh Mint Lemonade', category: 'juice', price: 35, isVeg: true, prep: '2 mins', image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=500&auto=format&fit=crop&q=80', desc: 'Fresh mint, lemon juice & sea salt cooler.' },
+      { id: 'j2', name: 'Traditional Nannari Sharbat', category: 'juice', price: 30, isVeg: true, prep: '2 mins', image: 'https://images.unsplash.com/photo-1546173159-315724a31696?w=500&auto=format&fit=crop&q=80', desc: 'Root syrup with basil seeds (sabja) & lemon.' },
+      { id: 'j3', name: 'Chilled Watermelon Juice', category: 'juice', price: 50, isVeg: true, prep: '3 mins', image: 'https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?w=500&auto=format&fit=crop&q=80', desc: '100% natural cold pressed fresh watermelon.' },
+      { id: 's1', name: 'Classic Chill Rose Milk', category: 'milkshakes', price: 40, isVeg: true, prep: '2 mins', image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=500&auto=format&fit=crop&q=80', desc: 'Rose syrup blended into thick cold full-cream milk.' },
+      { id: 's2', name: 'Lotus Biscoff Thickshake', category: 'milkshakes', price: 90, isVeg: true, prep: '4 mins', image: 'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=500&auto=format&fit=crop&q=80', desc: 'Caramelized Biscoff spread with vanilla scoop.' },
+      { id: 's3', name: 'Oreo Overload Shake', category: 'milkshakes', price: 70, isVeg: true, prep: '3 mins', image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=500&auto=format&fit=crop&q=80', desc: 'Crushed Oreo cookies blended in vanilla cream.' },
+      { id: 'i1', name: 'Belgian Dark Chocolate Scoop', category: 'icecream', price: 50, isVeg: true, prep: '1 min', image: 'https://images.unsplash.com/photo-1580915411954-282cb1b0d780?w=500&auto=format&fit=crop&q=80', desc: 'Deep cocoa chocolate scoop with dark shavings.' },
+      { id: 'mj1', name: 'Electric Blue Lagoon Mojito', category: 'mojitos', price: 70, isVeg: true, prep: '2 mins', image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=500&auto=format&fit=crop&q=80', desc: 'Blue curaçao syrup, lemon juice, mint & sprite.' }
+    ];
+
+    // State Variables
+    let cart = [];
+    let selectedSlotId = 'morning';
+    let activeCategory = 'all';
+    let filterVeg = 'all';
+    let simMode = 'sim'; // 'live' or 'sim'
+    let currentMins = 620; // Default 10:20 AM
+    let adminSlotId = 'morning';
+
+    let orders = [
+      { id: 'ord-101', token: 'MB-008', slotId: 'morning', studentName: 'Ananya S.', rollNumber: '21CS042', paymentMethod: 'UPI on Pickup', status: 'Ready', totalAmount: 115, items: [{ name: 'Bread Omelette', price: 40, quantity: 2 }] },
+      { id: 'ord-102', token: 'MB-009', slotId: 'morning', studentName: 'Karthik R.', rollNumber: '22ME015', paymentMethod: 'Cash on Pickup', status: 'Preparing', totalAmount: 125, items: [{ name: 'Chicken Burger', price: 85, quantity: 1 }] }
+    ];
+
+    // Functions
+    function initApp() {
+      renderMenu();
+      renderCart();
+      renderBoard();
+      renderAdmin();
+      updateSimDisplay();
+    }
+
+    function switchView(viewName) {
+      document.getElementById('view-menu').classList.add('hidden');
+      document.getElementById('view-board').classList.add('hidden');
+      document.getElementById('view-admin').classList.add('hidden');
+      
+      document.getElementById('tab-menu').classList.remove('active');
+      document.getElementById('tab-board').classList.remove('active');
+      document.getElementById('tab-admin').classList.remove('active');
+
+      document.getElementById(`view-${viewName}`).classList.remove('hidden');
+      document.getElementById(`tab-${viewName}`).classList.add('active');
+    }
+
+    function setSimTime(mode, mins) {
+      simMode = mode;
+      if (mode === 'live') {
+        const now = new Date();
+        currentMins = now.getHours() * 60 + now.getMinutes();
+      } else {
+        currentMins = mins;
+      }
+      updateSimDisplay();
+      renderCart();
+    }
+
+    function updateSimDisplay() {
+      const h = Math.floor(currentMins / 60);
+      const m = currentMins % 60;
+      const period = h >= 12 ? 'PM' : 'AM';
+      const displayH = h % 12 || 12;
+      const displayM = String(m).padStart(2, '0');
+      document.getElementById('sim-time-display').innerText = `${displayH}:${displayM} ${period}`;
+    }
+
+    function setCategory(cat, btn) {
+      activeCategory = cat;
+      document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderMenu();
+    }
+
+    function setVegFilter(type) {
+      filterVeg = type;
+      document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(`veg-${type}`).classList.add('active');
+      renderMenu();
+    }
+
+    function renderMenu() {
+      const grid = document.getElementById('menu-grid');
+      const search = document.getElementById('search-input').value.toLowerCase();
+
+      const items = MENU_ITEMS.filter(item => {
+        const matchCat = activeCategory === 'all' || item.category === activeCategory;
+        const matchSearch = item.name.toLowerCase().includes(search) || item.desc.toLowerCase().includes(search);
+        const matchVeg = filterVeg === 'all' || (filterVeg === 'veg' && item.isVeg) || (filterVeg === 'nonveg' && !item.isVeg);
+        return matchCat && matchSearch && matchVeg;
+      });
+
+      grid.innerHTML = items.map(item => `
+        <div class="food-card">
+          <div class="card-img-box">
+            <img src="${item.image}" alt="${item.name}" />
+            <div class="badge-veg">
+              <span class="${item.isVeg ? 'dot-veg' : 'dot-nonveg'}"></span>
+              ${item.isVeg ? 'Veg' : 'Non-Veg'}
+            </div>
+            <div class="badge-hot">⚡ ${item.prep}</div>
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="item-title">${item.name}</div>
+              <div class="item-desc">${item.desc}</div>
+            </div>
+            <div class="card-footer">
+              <div class="price-tag">₹${item.price}</div>
+              <button class="add-btn" onclick="addToCart('${item.id}')">+ Add</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addToCart(itemId) {
+      const item = MENU_ITEMS.find(i => i.id === itemId);
+      const existing = cart.find(i => i.id === itemId);
+      if (existing) {
+        existing.quantity++;
+      } else {
+        cart.push({ ...item, quantity: 1 });
+      }
+      renderCart();
+    }
+
+    function updateQty(itemId, delta) {
+      const item = cart.find(i => i.id === itemId);
+      if (item) {
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+          cart = cart.filter(i => i.id !== itemId);
+        }
+      }
+      renderCart();
+    }
+
+    function renderCart() {
+      const totalCount = cart.reduce((s, i) => s + i.quantity, 0);
+      const totalPrice = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+
+      document.getElementById('header-cart-count').innerText = totalCount;
+      document.getElementById('cart-total-price').innerText = `₹${totalPrice}`;
+
+      // Render Items
+      const container = document.getElementById('cart-items-container');
+      if (cart.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:30px; color:var(--text-muted); font-size:13px;">Cart is empty. Add items from the menu!</div>`;
+      } else {
+        container.innerHTML = cart.map(item => `
+          <div class="cart-item-row">
+            <div>
+              <div style="font-size:13px; font-weight:800;">${item.name}</div>
+              <div style="color:var(--gold); font-size:12px; font-weight:800;">₹${item.price * item.quantity}</div>
+            </div>
+            <div class="qty-controls">
+              <button class="qty-btn" onclick="updateQty('${item.id}', -1)">-</button>
+              <span style="font-size:12px; font-weight:900;">${item.quantity}</span>
+              <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Render Slots & Check Locking
+      const slotContainer = document.getElementById('slot-options-container');
+      let isSelectedLocked = false;
+
+      slotContainer.innerHTML = BREAK_SLOTS.map(slot => {
+        const isLocked = currentMins >= slot.lockMins;
+        const isSelected = selectedSlotId === slot.id;
+        if (isSelected && isLocked) isSelectedLocked = true;
+
+        return `
+          <div class="slot-card ${isSelected ? 'selected' : ''} ${isLocked ? 'locked' : ''}" onclick="selectSlot('${slot.id}')">
+            <div>
+              <div style="font-size:12px; font-weight:800;">${slot.name} (${slot.code})</div>
+              <div style="font-size:11px; color:var(--text-muted);">${slot.pickup}</div>
+            </div>
+            <div style="font-size:11px; font-weight:800; color:${isLocked ? '#FCA5A5' : 'var(--emerald)'};">
+              ${isLocked ? '🔒 Locked' : '🟢 Open'}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const alertBox = document.getElementById('slot-lock-alert');
+      const checkoutBtn = document.getElementById('btn-checkout');
+
+      if (isSelectedLocked) {
+        alertBox.classList.remove('hidden');
+        checkoutBtn.disabled = true;
+      } else {
+        alertBox.classList.add('hidden');
+        checkoutBtn.disabled = cart.length === 0;
+      }
+    }
+
+    function selectSlot(slotId) {
+      selectedSlotId = slotId;
+      renderCart();
+    }
+
+    function openCart() {
+      document.getElementById('cart-modal').classList.add('open');
+    }
+
+    function closeCart() {
+      document.getElementById('cart-modal').classList.remove('open');
+    }
+
+    function confirmOrder() {
+      if (cart.length === 0) return;
+      const slot = BREAK_SLOTS.find(s => s.id === selectedSlotId);
+      const name = document.getElementById('input-name').value || 'Student';
+      const roll = document.getElementById('input-roll').value || '21CS001';
+      const pay = document.getElementById('input-payment').value;
+
+      const tokenNum = `${slot.code}-${String(orders.length + 1).padStart(3, '0')}`;
+      const newOrder = {
+        id: `ord-${Date.now()}`,
+        token: tokenNum,
+        slotId: slot.id,
+        studentName: name,
+        rollNumber: roll,
+        paymentMethod: pay,
+        status: 'Placed',
+        totalAmount: cart.reduce((s, i) => s + i.price * i.quantity, 0),
+        items: [...cart]
+      };
+
+      orders.unshift(newOrder);
+      cart = [];
+      renderCart();
+      closeCart();
+
+      // Show Ticket
+      showTicket(newOrder);
+      renderBoard();
+      renderAdmin();
+    }
+
+    function showTicket(order) {
+      document.getElementById('ticket-token-id').innerText = order.token;
+      document.getElementById('ticket-student-name').innerText = `${order.studentName} (${order.rollNumber})`;
+      document.getElementById('ticket-payment-method').innerText = order.paymentMethod;
+      document.getElementById('ticket-modal').classList.add('open');
+    }
+
+    function closeTicket() {
+      document.getElementById('ticket-modal').classList.remove('open');
+    }
+
+    function renderBoard() {
+      const readyOrder = orders.find(o => o.status === 'Ready');
+      if (readyOrder) {
+        document.getElementById('board-now-serving-token').innerText = readyOrder.token;
+        document.getElementById('board-now-serving-name').innerText = `${readyOrder.studentName} (${readyOrder.rollNumber})`;
+      } else {
+        document.getElementById('board-now-serving-token').innerText = 'NONE';
+        document.getElementById('board-now-serving-name').innerText = 'Awaiting Kitchen Staff';
+      }
+
+      const prepOrders = orders.filter(o => o.status === 'Preparing');
+      document.getElementById('board-prep-list').innerHTML = prepOrders.length === 0
+        ? `<div style="font-size:12px; color:var(--text-muted);">No orders cooking right now</div>`
+        : prepOrders.map(o => `
+            <div style="background:#1F2937; padding:10px 16px; border-radius:12px; font-weight:800; color:var(--gold);">
+              ${o.token} (${o.studentName})
+            </div>
+          `).join('');
+    }
+
+    function speakToken() {
+      const token = document.getElementById('board-now-serving-token').innerText;
+      if ('speechSynthesis' in window && token !== 'NONE') {
+        const text = `Token number ${token} is ready for pickup at Luck-in Cafe counter!`;
+        const utterance = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function setAdminSlot(slotId, btn) {
+      adminSlotId = slotId;
+      document.querySelectorAll('#view-admin .nav-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderAdmin();
+    }
+
+    function renderAdmin() {
+      const list = document.getElementById('admin-orders-list');
+      const filtered = orders.filter(o => o.slotId === adminSlotId);
+
+      list.innerHTML = filtered.length === 0
+        ? `<div style="text-align:center; padding:30px; color:var(--text-muted); font-size:13px;">No orders for this slot</div>`
+        : filtered.map(o => `
+            <div class="admin-order-card">
+              <div>
+                <div style="font-size:16px; font-weight:900; color:var(--gold);">${o.token} — ${o.studentName} (${o.rollNumber})</div>
+                <div style="font-size:12px; color:var(--text-muted); font-weight:700;">${o.paymentMethod} • Bill: ₹${o.totalAmount}</div>
+              </div>
+
+              <div>
+                ${o.status === 'Placed' ? `<button class="admin-btn btn-prep" onclick="advanceStatus('${o.id}', 'Preparing')">Start Cooking 🔥</button>` : ''}
+                ${o.status === 'Preparing' ? `<button class="admin-btn btn-ready" onclick="advanceStatus('${o.id}', 'Ready')">Mark Ready ✓</button>` : ''}
+                ${o.status === 'Ready' ? `<button class="admin-btn btn-done" onclick="advanceStatus('${o.id}', 'Completed')">Hand Over ✓</button>` : ''}
+                ${o.status === 'Completed' ? `<span style="font-size:11px; font-weight:800; color:var(--emerald);">Completed ✓</span>` : ''}
+              </div>
+            </div>
+          `).join('');
+    }
+
+    function advanceStatus(orderId, newStatus) {
+      const order = orders.find(o => o.id === orderId);
+      if (order) {
+        order.status = newStatus;
+        renderAdmin();
+        renderBoard();
+      }
+    }
+
+    // Initialize on load
+    window.onload = initApp;
+  </script>
+</body>
+</html>
