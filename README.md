@@ -14,4 +14,4 @@ CSS3 – Styling & responsive layout
 JavaScript – Interactivity
 React – Component-based UI
 This app will run at
-[https://arunams036-glitch.github.io/fresh-list-enquire/](url)
+https://arunams036-glitch.github.io/luck-in-cafe/[](url)
